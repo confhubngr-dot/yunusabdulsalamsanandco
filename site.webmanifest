@@ -1,0 +1,13 @@
+{
+  "name": "Yunus Abdulsalam SAN & Co.",
+  "short_name": "YAS Legal",
+  "description": "Legal Practitioners & Arbitrators, Asokoro, Abuja.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#13315c",
+  "icons": [
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

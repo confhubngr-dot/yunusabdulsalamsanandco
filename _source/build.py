@@ -78,6 +78,21 @@ def jsonld(active):
         "openingHours": "Mo-Fr 09:00-17:00",
     }
     blocks = [firm]
+    crumb_titles = {
+        "about.html": "The Firm", "practice-areas.html": "Practice Areas",
+        "team.html": "Our Team", "publications.html": "Publications",
+        "contact.html": "Contact", "yunus-abdulsalam.html": "Yunus Abdulsalam, SAN",
+    }
+    if active in crumb_titles:
+        blocks.append({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL + "/"},
+                {"@type": "ListItem", "position": 2, "name": crumb_titles[active],
+                 "item": SITE_URL + "/" + active},
+            ],
+        })
     if active == "team.html" or active == "yunus-abdulsalam.html":
         blocks.append({
             "@context": "https://schema.org",
@@ -112,9 +127,24 @@ def head(title, desc, active):
 <meta property="og:title" content="{title} | {FIRM}">
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="website">
-<meta property="og:image" content="{SITE_URL}/assets/img/yunus-abdulsalam-full.jpg">
-<meta name="robots" content="index, follow">
+<meta property="og:site_name" content="Yunus Abdulsalam SAN &amp; Co.">
+<meta property="og:locale" content="en_NG">
+<meta property="og:url" content="{SITE_URL}/{active if active != 'index.html' else ''}">
+<meta property="og:image" content="{SITE_URL}/assets/img/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Yunus Abdulsalam SAN &amp; Co., Legal Practitioners and Arbitrators, Asokoro, Abuja">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{title} | {FIRM}">
+<meta name="twitter:description" content="{desc}">
+<meta name="twitter:image" content="{SITE_URL}/assets/img/og-card.jpg">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="geo.region" content="NG-FC">
+<meta name="geo.placename" content="Asokoro, Abuja">
 <link rel="canonical" href="{SITE_URL}/{active if active != 'index.html' else ''}">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 {jsonld(active)}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -143,7 +173,7 @@ def head(title, desc, active):
     </button>
     <nav class="nav" id="nav">
         {nav}
-        <a class="btn" href="contact.html">Request a Consultation</a>
+        <a class="btn btn--nav" href="contact.html">Consultation</a>
     </nav>
   </div>
 </header>
@@ -212,6 +242,19 @@ def foot():
       if(e.target.tagName==='A'){{n.classList.remove('open');b.setAttribute('aria-expanded','false');document.body.style.overflow='';}}
     }});
   }}
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els = document.querySelectorAll('.reveal, .card, .value-card, .person, .pub-item, .fact, .stat');
+  if (reduce || !('IntersectionObserver' in window)) {{
+    for (var i=0;i<els.length;i++) els[i].classList.add('is-in');
+  }} else {{
+    for (var j=0;j<els.length;j++) els[j].classList.add('will-reveal');
+    var io = new IntersectionObserver(function(entries){{
+      entries.forEach(function(en){{
+        if (en.isIntersecting) {{ en.target.classList.add('is-in'); io.unobserve(en.target); }}
+      }});
+    }}, {{ rootMargin: '0px 0px -40px 0px', threshold: 0.06 }});
+    for (var k=0;k<els.length;k++) io.observe(els[k]);
+  }}
   var f=document.getElementById('enquiry');
   if(f){{
     f.addEventListener('submit',function(e){{
@@ -279,9 +322,18 @@ def person_card(name, role, photo, link=None, lead=False):
 def page_home():
     feat = ["debt-recovery","litigation","arbitration","property-law","oil-and-gas","corporate-commercial"]
     cards = ""
+    import re as _re
+    def _snippet(text, min_len=70):
+        parts = _re.split(r'(?<=\.)\s+', text.strip())
+        out = ""
+        for p in parts:
+            out = (out + " " + p).strip()
+            if len(out) >= min_len:
+                break
+        return out.rstrip(".") + "."
     for s,t,paras,_ in AREAS:
         if s in feat:
-            snip = paras[0].split(". ")[0] + "."
+            snip = _snippet(paras[0])
             cards += f"""      <a class="card" href="practice-areas.html#{s}">
         <span class="card-ico">{ico(s)}</span>
         <h3>{t}</h3><p>{snip}</p>
@@ -294,7 +346,7 @@ def page_home():
         "index.html") + f"""
 <section class="hero">
   <div class="hero-chev" aria-hidden="true"></div>
-  <div class="wrap">
+  <div class="wrap hero-in">
     <span class="eyebrow">Legal Practitioners &amp; Arbitrators &middot; Abuja</span>
     <h1>Strategic counsel for Nigeria&rsquo;s most demanding legal matters.</h1>
     <p>A Senior Advocate&ndash;led firm delivering results in debt recovery, property, energy, arbitration and corporate disputes.</p>
@@ -361,8 +413,8 @@ def page_home():
     <span class="eyebrow">Leadership</span>
     <h2>Led by a Senior Advocate of Nigeria</h2>
     <hr class="rule rule--center">
-    <span class="lead-circle">
-      <img src="assets/img/yunus-abdulsalam-robe.jpg" alt="Yunus Abdulsalam, SAN, Principal Partner, in Senior Advocate robes" width="880" height="1441">
+    <span class="lead-portrait reveal">
+      <img src="assets/img/yunus-abdulsalam-robe.jpg" alt="Yunus Abdulsalam, SAN, Principal Partner, in Senior Advocate robes" width="880" height="1441" loading="lazy" decoding="async">
     </span>
     <h3 style="font-size:1.5rem;margin-bottom:.15em">Yunus Abdulsalam, SAN</h3>
     <p class="mini-role" style="margin-bottom:18px">Principal Partner</p>
@@ -505,7 +557,7 @@ def page_team():
     <hr class="rule">
     <div class="profile-lead" style="margin-top:34px">
       <div class="profile-portrait">
-        <img src="assets/img/yunus-abdulsalam-full.jpg" alt="Yunus Abdulsalam, SAN, Principal Partner" width="880" height="1579">
+        <img src="assets/img/yunus-abdulsalam-full.jpg" alt="Yunus Abdulsalam, SAN, Principal Partner" width="880" height="1579" fetchpriority="high" decoding="async">
         <div class="pp-body">
           <h3>Yunus Abdulsalam, SAN</h3>
           <p class="role">Principal Partner</p>
@@ -565,7 +617,7 @@ def page_principal():
   <div class="wrap">
     <div class="profile-lead">
       <div class="profile-portrait">
-        <img src="assets/img/yunus-abdulsalam-full.jpg" alt="Yunus Abdulsalam, SAN, Principal Partner" width="880" height="1579">
+        <img src="assets/img/yunus-abdulsalam-full.jpg" alt="Yunus Abdulsalam, SAN, Principal Partner" width="880" height="1579" fetchpriority="high" decoding="async">
         <div class="pp-body">
           <h3>Yunus Abdulsalam, SAN</h3>
           <p class="role">Principal Partner</p>
@@ -764,6 +816,26 @@ def page_contact():
 """ + foot()
 
 
+def page_404():
+    return head("Page Not Found",
+        "That page could not be found. Browse the practice areas or contact Yunus Abdulsalam SAN & Co. in Asokoro, Abuja.",
+        "") + f"""
+<section class="section center" style="padding:110px 0">
+  <div class="wrap" style="max-width:620px">
+    <span class="eyebrow">Error 404</span>
+    <h1 style="font-size:clamp(2rem,6vw,3rem)">This page could not be found</h1>
+    <hr class="rule rule--center">
+    <p class="lead">The page may have been moved or the address mistyped. These links will get you back on track.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px">
+      <a class="btn" href="index.html">Return Home</a>
+      <a class="btn btn--ghost" href="practice-areas.html">Practice Areas</a>
+      <a class="btn btn--ghost" href="contact.html">Contact Us</a>
+    </div>
+  </div>
+</section>
+""" + foot()
+
+
 PAGES = {
   "index.html": page_home,
   "about.html": page_about,
@@ -772,6 +844,7 @@ PAGES = {
   "yunus-abdulsalam.html": page_principal,
   "publications.html": page_pubs,
   "contact.html": page_contact,
+  "404.html": page_404,
 }
 
 def write_seo_files():
@@ -784,11 +857,26 @@ def write_seo_files():
     <changefreq>monthly</changefreq>
     <priority>{'1.0' if fn == 'index.html' else '0.8'}</priority>
   </url>
-""" for fn in PAGES)
+""" for fn in PAGES if fn != "404.html")
     with open(os.path.join(OUT, "sitemap.xml"), "w", encoding="utf-8") as f:
         f.write(f"""<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {urls}</urlset>
+""")
+    with open(os.path.join(OUT, "site.webmanifest"), "w", encoding="utf-8") as f:
+        f.write("""{
+  "name": "Yunus Abdulsalam SAN & Co.",
+  "short_name": "YAS Legal",
+  "description": "Legal Practitioners & Arbitrators, Asokoro, Abuja.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#13315c",
+  "icons": [
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
 """)
     with open(os.path.join(OUT, "robots.txt"), "w", encoding="utf-8") as f:
         f.write(f"""User-agent: *

@@ -9,10 +9,26 @@
 <meta property="og:title" content="Contact | Yunus Abdulsalam SAN &amp; Co.">
 <meta property="og:description" content="Contact Yunus Abdulsalam SAN & Co. — Flat D2, Hampton Apartment, No. 2 Mungo Park Close, Off Jesse Jackson Street, Asokoro, Abuja, FCT, Nigeria. Telephone +234 706 124 1532.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://yaslegal.org/assets/img/yunus-abdulsalam-full.jpg">
-<meta name="robots" content="index, follow">
+<meta property="og:site_name" content="Yunus Abdulsalam SAN &amp; Co.">
+<meta property="og:locale" content="en_NG">
+<meta property="og:url" content="https://yaslegal.org/contact.html">
+<meta property="og:image" content="https://yaslegal.org/assets/img/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Yunus Abdulsalam SAN &amp; Co., Legal Practitioners and Arbitrators, Asokoro, Abuja">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Contact | Yunus Abdulsalam SAN &amp; Co.">
+<meta name="twitter:description" content="Contact Yunus Abdulsalam SAN & Co. — Flat D2, Hampton Apartment, No. 2 Mungo Park Close, Off Jesse Jackson Street, Asokoro, Abuja, FCT, Nigeria. Telephone +234 706 124 1532.">
+<meta name="twitter:image" content="https://yaslegal.org/assets/img/og-card.jpg">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="geo.region" content="NG-FC">
+<meta name="geo.placename" content="Asokoro, Abuja">
 <link rel="canonical" href="https://yaslegal.org/contact.html">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "LegalService", "name": "Yunus Abdulsalam SAN & Co.", "alternateName": "Yunus Abdulsalam SAN and Co", "description": "Full-service Nigerian law firm in Asokoro, Abuja — debt recovery, property law, litigation, arbitration, energy law and corporate practice.", "url": "https://yaslegal.org/", "telephone": "+2347061241532", "email": "info@yaslegal.org", "address": {"@type": "PostalAddress", "streetAddress": "Flat D2, Hampton Apartment, No. 2 Mungo Park Close, Off Jesse Jackson Street", "addressLocality": "Asokoro, Abuja", "addressRegion": "Federal Capital Territory", "addressCountry": "NG"}, "areaServed": "Nigeria", "founder": {"@type": "Person", "name": "Yunus Abdulsalam", "honorificSuffix": "SAN", "jobTitle": "Principal Partner"}, "knowsAbout": ["Debt Recovery", "Energy Law", "Tax Litigation", "Shipping and Maritime", "Real and Personal Property Law", "Oil and Gas Law", "Administrative Law", "Arbitration", "Litigation and Civil Procedure", "Labour and Employment", "Assets Recovery", "Chieftaincy Matters", "Intellectual Property", "Fundamental Rights", "Consultancy and Advisory Services", "Corporate & Commercial", "Family Law", "Election Petition", "Corporate Litigation", "Criminal Law", "Tort and Personal Injury"], "openingHours": "Mo-Fr 09:00-17:00"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://yaslegal.org/"}, {"@type": "ListItem", "position": 2, "name": "Contact", "item": "https://yaslegal.org/contact.html"}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
@@ -51,7 +67,7 @@
         <a href="team.html">Our Team</a>
         <a href="publications.html">Publications</a>
         <a href="contact.html" class="active">Contact</a>
-        <a class="btn" href="contact.html">Request a Consultation</a>
+        <a class="btn btn--nav" href="contact.html">Consultation</a>
     </nav>
   </div>
 </header>
@@ -234,6 +250,19 @@
     n.addEventListener('click',function(e){
       if(e.target.tagName==='A'){n.classList.remove('open');b.setAttribute('aria-expanded','false');document.body.style.overflow='';}
     });
+  }
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var els = document.querySelectorAll('.reveal, .card, .value-card, .person, .pub-item, .fact, .stat');
+  if (reduce || !('IntersectionObserver' in window)) {
+    for (var i=0;i<els.length;i++) els[i].classList.add('is-in');
+  } else {
+    for (var j=0;j<els.length;j++) els[j].classList.add('will-reveal');
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -40px 0px', threshold: 0.06 });
+    for (var k=0;k<els.length;k++) io.observe(els[k]);
   }
   var f=document.getElementById('enquiry');
   if(f){
