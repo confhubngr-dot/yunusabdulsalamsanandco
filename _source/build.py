@@ -8,7 +8,7 @@ OUT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Set this to the firm's real domain before launch (no trailing slash),
 # e.g. "https://www.yunusabdulsalamsan.com" — then rebuild.
-SITE_URL = "https://www.example.com"
+SITE_URL = "https://yaslegal.org"
 
 LOGO_SVG = """<svg viewBox="0 0 64 64" role="img" aria-label="Yunus Abdulsalam SAN &amp; Co. monogram"><circle cx="32" cy="32" r="27" fill="none" stroke="{c}" stroke-width="3.4"/><path d="M20 18 L32 34 L44 18" fill="none" stroke="{c}" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 34 L32 46" fill="none" stroke="{c}" stroke-width="3.8" stroke-linecap="round"/><path d="M45 20 L21 47" fill="none" stroke="#b08d3f" stroke-width="3.4" stroke-linecap="round"/></svg>"""
 
@@ -509,7 +509,7 @@ def page_team():
         <div class="pp-body">
           <h3>Yunus Abdulsalam, SAN</h3>
           <p class="role">Principal Partner</p>
-          <div class="pp-meta"><a href="mailto:{EMAIL}">{EMAIL}</a></div>
+          <div class="pp-meta"><a href="mailto:{EMAIL_PARTNER}">{EMAIL_PARTNER}</a></div>
         </div>
       </div>
       <div>
@@ -570,7 +570,7 @@ def page_principal():
           <h3>Yunus Abdulsalam, SAN</h3>
           <p class="role">Principal Partner</p>
           <div class="pp-meta">
-            <a href="mailto:{EMAIL}">{EMAIL}</a><br>
+            <a href="mailto:{EMAIL_PARTNER}">{EMAIL_PARTNER}</a><br>
             <a href="tel:{PHONE_HREF}">{PHONE}</a>
           </div>
         </div>

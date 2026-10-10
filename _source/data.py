@@ -5,7 +5,8 @@ FIRM   = "Yunus Abdulsalam SAN &amp; Co."
 TAG    = "Legal Practitioners &amp; Arbitrators"
 PHONE  = "+234 706 124 1532"
 PHONE_HREF = "+2347061241532"
-EMAIL  = "yunusabdulsalam7@gmail.com"
+EMAIL  = "info@yaslegal.org"            # public address: header, footer, contact page, enquiry form
+EMAIL_PARTNER = "yunusabdulsalam@yaslegal.org"   # Principal Partner's direct address (bio + team pages)
 ADDR_L1 = "Flat D2, Hampton Apartment, No. 2 Mungo Park Close"
 ADDR_L2 = "Off Jesse Jackson Street, Asokoro, Abuja, FCT, Nigeria"
 
